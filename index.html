@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Steven Stone — Bespoke Fine Jewellery</title>
+  <meta name="description" content="Handcrafted fine jewellery of exceptional quality. Bespoke engagement rings, diamond necklaces, and luxury pieces crafted to endure." />
+  <meta name="theme-color" content="#050403" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Steven Stone — Bespoke Fine Jewellery" />
+  <meta property="og:description" content="Handcrafted fine jewellery of exceptional quality. Bespoke engagement rings, diamond necklaces, and luxury pieces crafted to endure." />
+  <meta property="og:image" content="/site_assets/img/col-rings.webp" />
+  <meta property="og:site_name" content="Steven Stone" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Steven Stone — Bespoke Fine Jewellery" />
+  <meta name="twitter:description" content="Handcrafted fine jewellery of exceptional quality. Bespoke pieces crafted to endure." />
+  <meta name="twitter:image" content="/site_assets/img/col-rings.webp" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.cdnfonts.com/css/futura-pt" rel="stylesheet" />
+
+  <!-- Three.js via importmap -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Futura PT"', 'Futura', '"Century Gothic"', 'Montserrat', 'sans-serif'],
+          },
+          colors: {
+            gold: { DEFAULT: '#C8960C', light: '#E4B429', dark: '#9A6F00', muted: 'rgba(200,150,12,0.15)' },
+            obsidian: { DEFAULT: '#050403', surface: '#0D0B08', elevated: '#1A1712', card: '#211E18' },
+            cream: { DEFAULT: '#F5EDE0', muted: '#A8947A', faint: 'rgba(245,237,224,0.06)' },
+          },
+          letterSpacing: { widest2: '0.25em', widest3: '0.35em' },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: auto; }
+
+    body {
+      background: #050403;
+      color: #F5EDE0;
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── Custom Cursor ─────────────────────────────────────── */
+    #cursor {
+      position: fixed; top: 0; left: 0; z-index: 9999;
+      width: 10px; height: 10px;
+      background: #C8960C;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+      mix-blend-mode: normal;
+    }
+    #cursor-ring {
+      position: fixed; top: 0; left: 0; z-index: 9998;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(200,150,12,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease;
+    }
+    body:has(a:hover) #cursor, body:has(button:hover) #cursor { width: 18px; height: 18px; background: #E4B429; }
+    body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width: 52px; height: 52px; border-color: rgba(200,150,12,0.8); }
+
+    /* ─── Grain overlay ─────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 9000;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 192px 192px;
+      opacity: 0.028;
+      pointer-events: none;
+    }
+
+    /* ─── Keyboard focus ────────────────────────────────────── */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #C8960C;
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ─── Scrollbar ─────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: #050403; }
+    ::-webkit-scrollbar-thumb { background: #C8960C; border-radius: 2px; }
+
+    /* ─── Typography ─────────────────────────────────────────── */
+    .font-display { font-family: 'Cormorant Garamond', serif; }
+    .text-gold { color: #C8960C; }
+    .text-gold-light { color: #E4B429; }
+    .text-cream { color: #F5EDE0; }
+    .text-cream-muted { color: #A8947A; }
+
+    /* ─── Navbar ─────────────────────────────────────────────── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 28px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.6s ease, padding 0.4s ease, backdrop-filter 0.6s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(5,4,3,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 18px 48px;
+      border-bottom: 1px solid rgba(200,150,12,0.12);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: #F5EDE0;
+      text-decoration: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    @media (max-width: 640px) {
+      .nav-logo { font-size: 17px; letter-spacing: 0.15em; }
+    }
+    .nav-logo span { color: #C8960C; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,237,224,0.65);
+      text-decoration: none;
+      cursor: none;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; width: 0; height: 1px;
+      background: #C8960C;
+      transition: width 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .nav-links a:hover { color: #F5EDE0; }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #C8960C;
+      border: 1px solid rgba(200,150,12,0.5);
+      padding: 10px 24px;
+      text-decoration: none;
+      cursor: none;
+      transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+    .nav-cta:hover { background: #C8960C; color: #050403; border-color: #C8960C; }
+
+    /* ─── Mobile menu ─────────────────────────────────────────── */
+    #menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid rgba(200,150,12,0.4);
+      width: 44px; height: 44px;
+      align-items: center; justify-content: center;
+      cursor: none;
+      flex-direction: column;
+      gap: 5px;
+      transition: border-color 0.3s ease;
+    }
+    #menu-toggle:hover { border-color: #C8960C; }
+    #menu-toggle span {
+      display: block;
+      width: 18px; height: 1px;
+      background: #F5EDE0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    #menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    #menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    #menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    #mobile-menu {
+      position: fixed; inset: 0; z-index: 400;
+      background: rgba(5,4,3,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    #mobile-menu.open { opacity: 1; pointer-events: auto; }
+    #mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 400;
+      color: #F5EDE0;
+      text-decoration: none;
+      padding: 12px 24px;
+      letter-spacing: 0.04em;
+      transition: color 0.3s ease;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease, color 0.3s ease;
+    }
+    #mobile-menu.open a { opacity: 1; transform: translateY(0); }
+    #mobile-menu.open a:nth-child(1) { transition-delay: 0.08s; }
+    #mobile-menu.open a:nth-child(2) { transition-delay: 0.16s; }
+    #mobile-menu.open a:nth-child(3) { transition-delay: 0.24s; }
+    #mobile-menu.open a:nth-child(4) { transition-delay: 0.32s; }
+    #mobile-menu.open a:nth-child(5) { transition-delay: 0.40s; }
+    #mobile-menu a:hover { color: #C8960C; }
+    #mobile-menu .menu-enquire {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #C8960C;
+      border: 1px solid rgba(200,150,12,0.5);
+      margin-top: 20px;
+    }
+
+    /* ─── Hero ───────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100vh; min-height: 700px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    #ring-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+    }
+    #sparkles-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 6;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center;
+      pointer-events: none;
+    }
+    .hero-pre {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #C8960C;
+      margin-bottom: 28px;
+      opacity: 0;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(72px, 10vw, 148px);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: #F5EDE0;
+      opacity: 0;
+      text-shadow: 0 0 24px rgba(5,4,3,0.9), 0 0 80px rgba(5,4,3,0.7);
+    }
+    .hero-title em {
+      font-style: italic;
+      color: #C8960C;
+    }
+    .hero-sub {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: rgba(245,237,224,0.75);
+      margin-top: 32px;
+      opacity: 0;
+      text-shadow: 0 0 16px rgba(5,4,3,0.9);
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 40px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: 0;
+    }
+    .hero-scroll-hint span {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(245,237,224,0.3);
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(200,150,12,0.8), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* Hero radial vignette */
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 0%, rgba(5,4,3,0.12) 60%, rgba(5,4,3,0.55) 100%);
+      pointer-events: none; z-index: 5;
+    }
+
+    /* ─── Marquee ─────────────────────────────────────────────── */
+    .marquee-outer {
+      position: relative;
+      padding: 20px 0;
+      border-top: 1px solid rgba(200,150,12,0.15);
+      border-bottom: 1px solid rgba(200,150,12,0.15);
+      overflow: hidden;
+      background: #0D0B08;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeSlide 28s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(200,150,12,0.7);
+      padding: 0 36px;
+      white-space: nowrap;
+      display: flex; align-items: center; gap: 36px;
+    }
+    .marquee-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(200,150,12,0.4); display: inline-block; }
+    @keyframes marqueeSlide {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── Section base ────────────────────────────────────────── */
+    .section-label {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #C8960C;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .section-label::before {
+      content: '';
+      display: block; width: 40px; height: 1px;
+      background: #C8960C; opacity: 0.6;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: #F5EDE0;
+    }
+
+    /* ─── Ring Showcase ───────────────────────────────────────── */
+    #showcase {
+      position: relative;
+      background: #050403;
+    }
+    .showcase-sticky {
+      position: sticky; top: 0;
+      height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .showcase-canvas-wrap {
+      position: absolute; inset: 0;
+    }
+    #showcase-canvas {
+      width: 100%; height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .showcase-text {
+      position: absolute;
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .showcase-text.left { left: 7%; top: 50%; transform: translateY(calc(-50% + 20px)); max-width: 360px; }
+    .showcase-text.right { right: 7%; top: 50%; transform: translateY(calc(-50% + 20px)); max-width: 360px; text-align: right; }
+    .showcase-text.visible { opacity: 1; transform: translateY(-50%); }
+    .showcase-text.right.visible { transform: translateY(-50%); }
+
+    .showcase-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      font-weight: 300;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(200,150,12,0.15);
+      line-height: 1;
+      margin-bottom: -20px;
+    }
+    .showcase-copy-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 400;
+      color: #F5EDE0;
+      line-height: 1.1;
+      margin-bottom: 18px;
+      text-shadow: 0 0 18px rgba(5,4,3,1), 0 0 50px rgba(5,4,3,0.8);
+    }
+    .showcase-copy-body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(245,237,224,0.85);
+      letter-spacing: 0.03em;
+      text-shadow: 0 0 14px rgba(5,4,3,1), 0 0 36px rgba(5,4,3,0.85);
+    }
+
+    /* ─── Collections ─────────────────────────────────────────── */
+    #collections {
+      background: #0D0B08;
+      padding: 120px 48px;
+    }
+    .collections-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 64px;
+    }
+    .collections-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      grid-template-rows: 470px 410px;
+      gap: 16px;
+    }
+    .collection-card-1 { grid-column: 1; grid-row: 1 / 3; }
+    .collection-card-2 { grid-column: 2; grid-row: 1; }
+    .collection-card-3 { grid-column: 3; grid-row: 1; }
+    .collection-card-4 { grid-column: 2 / 4; grid-row: 2; }
+    .collection-card {
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+    .collection-card::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to top, rgba(5,4,3,0.85) 0%, rgba(5,4,3,0.1) 60%, transparent 100%);
+      transition: opacity 0.5s ease;
+    }
+    .collection-card:hover::before { opacity: 0.7; }
+    .collection-card::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse 65% 55% at 50% 38%, rgba(200,150,12,0.10), transparent 70%);
+      pointer-events: none;
+    }
+    .collection-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94);
+      filter: brightness(0.8) saturate(0.9);
+    }
+    .collection-card:hover img { transform: scale(1.08); filter: brightness(0.7) saturate(1); }
+    .collection-card-body {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      padding: 32px 36px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+    }
+    .collection-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: #F5EDE0;
+      letter-spacing: 0.01em;
+    }
+    .collection-count {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,237,224,0.65);
+    }
+    .collection-arrow {
+      width: 44px; height: 44px;
+      border: 1px solid rgba(200,150,12,0.4);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+    .collection-card:hover .collection-arrow { background: #C8960C; border-color: #C8960C; transform: rotate(45deg); }
+    .collection-card:hover .collection-arrow svg { color: #050403; }
+
+    /* ─── Brand Story ─────────────────────────────────────────── */
+    #story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+    .story-image-side {
+      position: relative;
+      overflow: hidden;
+    }
+    .story-image-side img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.6) saturate(0.7);
+      transition: transform 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    #story:hover .story-image-side img { transform: scale(1.04); }
+    .story-image-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 70%, #0D0B08 100%);
+    }
+    .story-text-side {
+      background: #0D0B08;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 100px 80px;
+    }
+    .story-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 3.5vw, 54px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.3;
+      color: #F5EDE0;
+      margin: 32px 0 40px;
+      border-left: 1px solid rgba(200,150,12,0.4);
+      padding-left: 32px;
+    }
+    .story-body {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(245,237,224,0.72);
+      letter-spacing: 0.03em;
+      max-width: 440px;
+    }
+    .story-stats {
+      display: flex; gap: 48px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(200,150,12,0.12);
+    }
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: #C8960C;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,237,224,0.6);
+      margin-top: 8px;
+    }
+
+    /* ─── Featured Pieces ─────────────────────────────────────── */
+    #featured {
+      background: #050403;
+      padding: 140px 48px;
+    }
+    .featured-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .featured-card {
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+      background: #0D0B08;
+    }
+    .featured-card-img {
+      position: relative;
+      height: 520px;
+      overflow: hidden;
+    }
+    .featured-card-img::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse 60% 50% at 50% 42%, rgba(200,150,12,0.09), transparent 70%);
+      pointer-events: none;
+    }
+    .featured-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.75) saturate(0.8);
+      transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s ease;
+    }
+    .featured-card:hover .featured-card-img img {
+      transform: scale(1.07);
+      filter: brightness(0.6) saturate(1.1);
+    }
+    .featured-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(5,4,3,0.9) 0%, transparent 50%);
+    }
+    .featured-card-enquire {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(5,4,3,0.5);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      backdrop-filter: blur(4px);
+    }
+    .featured-card:hover .featured-card-enquire { opacity: 1; }
+    .enquire-btn {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #050403;
+      background: #C8960C;
+      padding: 14px 32px;
+      border: none;
+      cursor: none;
+      transform: translateY(8px);
+      transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), background 0.3s ease;
+    }
+    .featured-card:hover .enquire-btn { transform: translateY(0); }
+    .enquire-btn:hover { background: #E4B429; }
+    .featured-card-body {
+      padding: 28px 32px 36px;
+      border-top: 1px solid rgba(200,150,12,0.1);
+    }
+    .featured-material {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #C8960C;
+      margin-bottom: 10px;
+    }
+    .featured-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: #F5EDE0;
+      margin-bottom: 14px;
+    }
+    .featured-price {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: rgba(245,237,224,0.55);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .price-badge {
+      font-family: 'Futura PT', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #C8960C;
+      border: 1px solid rgba(200,150,12,0.35);
+      padding: 4px 10px;
+    }
+
+    /* ─── Gold Divider ────────────────────────────────────────── */
+    .gold-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(200,150,12,0.4) 30%, rgba(200,150,12,0.4) 70%, transparent);
+    }
+
+    /* ─── Footer ──────────────────────────────────────────────── */
+    #footer {
+      background: #0D0B08;
+      padding: 80px 48px 48px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 64px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid rgba(200,150,12,0.1);
+      margin-bottom: 40px;
+    }
+    .footer-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #F5EDE0;
+      margin-bottom: 20px;
+    }
+    .footer-brand-name span { color: #C8960C; }
+    .footer-tagline {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(245,237,224,0.35);
+      max-width: 280px;
+    }
+    .footer-col-title {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #C8960C;
+      margin-bottom: 24px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .footer-links a {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(245,237,224,0.65);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      cursor: none;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover { color: #F5EDE0; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copy {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(245,237,224,0.55);
+    }
+    .footer-socials { display: flex; gap: 20px; }
+    .footer-social-link {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(200,150,12,0.2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: none;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .footer-social-link:hover { border-color: #C8960C; background: rgba(200,150,12,0.1); }
+    .footer-social-link svg { width: 14px; height: 14px; color: rgba(245,237,224,0.4); transition: color 0.3s ease; }
+    .footer-social-link:hover svg { color: #C8960C; }
+
+    /* ─── Reveal animations ───────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(40px); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); }
+    .reveal-right { opacity: 0; transform: translateX(40px); }
+
+    /* ─── Luxury text reveals ─────────────────────────────────── */
+    .char { display: inline-block; will-change: transform; }
+    .line-mask { display: block; overflow: hidden; }
+    .line-mask .line { display: block; will-change: transform; }
+
+    /* Gold shimmer sweep — a glint of light passing over gold words */
+    .shimmer-gold {
+      font-style: italic;
+      background: linear-gradient(110deg, #C8960C 38%, #F2DFA7 50%, #C8960C 62%);
+      background-size: 220% 100%;
+      background-position: 110% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerSweep 6s ease-in-out infinite;
+    }
+    @keyframes shimmerSweep {
+      0%, 55% { background-position: 110% 0; }
+      85%, 100% { background-position: -70% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .shimmer-gold { animation: none; color: #C8960C; -webkit-text-fill-color: #C8960C; }
+    }
+
+    /* ─── Mobile ──────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      #navbar { padding: 24px 28px; }
+      #navbar.scrolled { padding: 16px 28px; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      #menu-toggle { display: flex; }
+      /* Showcase: ring rides higher, copy docks to the bottom — no overlap */
+      .showcase-text.left, .showcase-text.right {
+        left: 24px; right: 24px;
+        top: auto; bottom: 6%;
+        max-width: none;
+        text-align: center;
+        transform: translateY(24px);
+      }
+      .showcase-text.left.visible, .showcase-text.right.visible { transform: translateY(0); }
+      .showcase-number { font-size: 72px; margin-bottom: -12px; }
+      .showcase-copy-title { font-size: 34px; }
+      .showcase-copy-body { font-size: 14px; }
+
+      .collections-grid { grid-template-columns: 1fr; grid-template-rows: 400px 300px 300px 300px; }
+      .collection-card-1, .collection-card-2, .collection-card-3, .collection-card-4 { grid-column: 1; grid-row: auto; }
+      #story { grid-template-columns: 1fr; }
+      .story-image-side { height: 50vh; }
+      .story-text-side { padding: 60px 32px; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      #collections { padding: 80px 28px; }
+      #featured { padding: 80px 28px; }
+    }
+    @media (max-width: 640px) {
+      .hero-title { font-size: 56px; }
+      .story-stats { gap: 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 40px; }
+      #cursor, #cursor-ring { display: none; }
+      body { cursor: auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav id="navbar">
+    <a href="/" class="nav-logo">Steven <span>Stone</span></a>
+    <ul class="nav-links">
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#story">Heritage</a></li>
+      <li><a href="#featured">Fine Pieces</a></li>
+      <li><a href="#footer">Visit Us</a></li>
+    </ul>
+    <a href="#footer" class="nav-cta">Enquire</a>
+    <button id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile fullscreen menu -->
+  <div id="mobile-menu" aria-hidden="true">
+    <a href="#collections">Collections</a>
+    <a href="#story">Heritage</a>
+    <a href="#featured">Fine Pieces</a>
+    <a href="#footer">Visit Us</a>
+    <a href="#footer" class="menu-enquire">Enquire</a>
+  </div>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section id="hero">
+    <canvas id="ring-canvas"></canvas>
+    <canvas id="sparkles-canvas" aria-hidden="true"></canvas>
+
+    <div class="hero-content">
+      <p class="hero-pre">Est. 1995 &nbsp;·&nbsp; Manchester, England</p>
+      <h1 class="hero-title">
+        Where Gold<br /><em>Meets</em> Eternity
+      </h1>
+      <p class="hero-sub">Bespoke Fine Jewellery &nbsp;·&nbsp; Handcrafted to Order</p>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Scroll to Explore</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ MARQUEE ═══════════════ -->
+  <div class="marquee-outer">
+    <div class="marquee-track">
+      <!-- First set -->
+      <div class="marquee-item">Diamonds <span class="marquee-dot"></span></div>
+      <div class="marquee-item">18ct Gold <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Platinum <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Bespoke Design <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Handcrafted <span class="marquee-dot"></span></div>
+      <div class="marquee-item">GIA Certified <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Ethically Sourced <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Manchester <span class="marquee-dot"></span></div>
+      <!-- Duplicate for seamless loop -->
+      <div class="marquee-item">Diamonds <span class="marquee-dot"></span></div>
+      <div class="marquee-item">18ct Gold <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Platinum <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Bespoke Design <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Handcrafted <span class="marquee-dot"></span></div>
+      <div class="marquee-item">GIA Certified <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Ethically Sourced <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Manchester <span class="marquee-dot"></span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ RING SHOWCASE ═══════════════ -->
+  <section id="showcase" style="height: 300vh;">
+    <div class="showcase-sticky">
+      <div class="showcase-canvas-wrap">
+        <canvas id="showcase-canvas"></canvas>
+      </div>
+
+      <!-- Text panels (shown via JS on scroll) -->
+      <div class="showcase-text left" id="st-1">
+        <div class="showcase-number">01</div>
+        <h3 class="showcase-copy-title">Every Facet<br />Tells a Story</h3>
+        <p class="showcase-copy-body">Each diamond is individually selected by our master gemologists — hand-picked for cut, clarity, and character. No two stones are alike.</p>
+      </div>
+      <div class="showcase-text right" id="st-2">
+        <div class="showcase-number">02</div>
+        <h3 class="showcase-copy-title">Precision<br />is Our Language</h3>
+        <p class="showcase-copy-body">Our craftsmen work to tolerances of a fraction of a millimetre. The setting, the prongs, the band — each element engineered to hold beauty for a lifetime.</p>
+      </div>
+      <div class="showcase-text left" id="st-3">
+        <div class="showcase-number">03</div>
+        <h3 class="showcase-copy-title">Crafted<br />for You</h3>
+        <p class="showcase-copy-body">Every piece begins as a conversation. From first sketch to final polish, your ring is made by one pair of hands — start to finish.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ COLLECTIONS ═══════════════ -->
+  <section id="collections">
+    <div class="collections-header reveal">
+      <div>
+        <div class="section-label" style="margin-bottom:20px;">Our Collections</div>
+        <h2 class="section-heading" style="font-size: clamp(40px,4vw,64px);">
+          Crafted for<br /><em class="shimmer-gold">Every Occasion</em>
+        </h2>
+      </div>
+      <a href="#" style="font-size:10px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,237,224,0.4); text-decoration:none; cursor:none; transition:color 0.3s ease;" onmouseover="this.style.color='#C8960C'" onmouseout="this.style.color='rgba(245,237,224,0.4)'">
+        View All Collections &nbsp;→
+      </a>
+    </div>
+
+    <div class="collections-grid">
+      <!-- Rings — large left card spanning 2 rows -->
+      <div class="collection-card collection-card-1">
+        <img src="/site_assets/img/col-rings.webp" alt="Diamond engagement rings and wedding bands" loading="lazy" />
+        <div class="collection-card-body">
+          <div>
+            <div class="collection-count" style="margin-bottom:8px;">48 Pieces</div>
+            <div class="collection-name">Rings</div>
+          </div>
+          <div class="collection-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:rgba(200,150,12,0.8)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Necklaces -->
+      <div class="collection-card collection-card-2">
+        <img src="/site_assets/img/col-necklaces.webp" alt="Diamond necklaces and pendants" loading="lazy" />
+        <div class="collection-card-body">
+          <div>
+            <div class="collection-count" style="margin-bottom:8px;">32 Pieces</div>
+            <div class="collection-name">Necklaces</div>
+          </div>
+          <div class="collection-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:rgba(200,150,12,0.8)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Earrings -->
+      <div class="collection-card collection-card-3">
+        <img src="/site_assets/img/col-earrings.webp" alt="Diamond earrings and studs" loading="lazy" />
+        <div class="collection-card-body">
+          <div>
+            <div class="collection-count" style="margin-bottom:8px;">27 Pieces</div>
+            <div class="collection-name">Earrings</div>
+          </div>
+          <div class="collection-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:rgba(200,150,12,0.8)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bracelets -->
+      <div class="collection-card collection-card-4">
+        <img src="/site_assets/img/col-bracelets.webp" alt="Diamond bracelets and bangles" loading="lazy" />
+        <div class="collection-card-body">
+          <div>
+            <div class="collection-count" style="margin-bottom:8px;">19 Pieces</div>
+            <div class="collection-name">Bracelets</div>
+          </div>
+          <div class="collection-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:rgba(200,150,12,0.8)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ BRAND STORY ═══════════════ -->
+  <section id="story">
+    <div class="story-image-side">
+      <img src="/site_assets/img/story-craft.webp" alt="Master jeweller crafting a bespoke ring" loading="lazy" />
+      <div class="story-image-overlay"></div>
+    </div>
+    <div class="story-text-side">
+      <div class="section-label reveal-left" style="margin-bottom:0;">Our Heritage</div>
+      <blockquote class="story-quote reveal-left">
+        "Precision is not our standard.<br />It is our obsession."
+      </blockquote>
+      <p class="story-body reveal-left">
+        Since 1995, Steven Stone has crafted jewellery that endures. Not as fashion, but as legacy. Each piece is designed with the singular belief that extraordinary materials deserve extraordinary craft — and that the person wearing it deserves nothing less.
+        <br /><br />
+        Our master jewellers work from our Manchester atelier, where every ring, pendant, and bracelet is made by hand, one at a time, with the same devotion to detail that has defined us for three decades.
+      </p>
+      <div class="story-stats reveal-left">
+        <div>
+          <div class="stat-value">30<span style="font-size:24px; color: #A8947A;">yrs</span></div>
+          <div class="stat-label">Of Craft</div>
+        </div>
+        <div>
+          <div class="stat-value">10K<span style="font-size:24px; color: #A8947A;">+</span></div>
+          <div class="stat-label">Pieces Made</div>
+        </div>
+        <div>
+          <div class="stat-value">5</div>
+          <div class="stat-label">Continents</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FEATURED PIECES ═══════════════ -->
+  <section id="featured">
+    <div class="featured-header reveal">
+      <div class="section-label" style="justify-content:center; margin-bottom:20px;">
+        <span style="display:none"></span>Fine Pieces
+      </div>
+      <h2 class="section-heading" style="font-size: clamp(40px,4vw,64px); text-align:center;">
+        Exceptional by <em class="shimmer-gold">Design</em>
+      </h2>
+    </div>
+
+    <div class="featured-grid">
+      <!-- Card 1 -->
+      <div class="featured-card reveal">
+        <div class="featured-card-img">
+          <img src="/site_assets/img/ring-lumiere.webp" alt="The Lumière Solitaire ring" loading="lazy" />
+          <div class="featured-card-overlay"></div>
+          <div class="featured-card-enquire">
+            <button class="enquire-btn">Enquire Now</button>
+          </div>
+        </div>
+        <div class="featured-card-body">
+          <div class="featured-material">18ct White Gold &nbsp;·&nbsp; Round Brilliant</div>
+          <div class="featured-name">The Lumière Solitaire</div>
+          <div class="featured-price">
+            From £4,850
+            <span class="price-badge">Bespoke</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="featured-card reveal">
+        <div class="featured-card-img">
+          <img src="/site_assets/img/ring-eclat.webp" alt="The Éclat Halo ring" loading="lazy" />
+          <div class="featured-card-overlay"></div>
+          <div class="featured-card-enquire">
+            <button class="enquire-btn">Enquire Now</button>
+          </div>
+        </div>
+        <div class="featured-card-body">
+          <div class="featured-material">18ct Rose Gold &nbsp;·&nbsp; Oval Halo</div>
+          <div class="featured-name">The Éclat Halo</div>
+          <div class="featured-price">
+            From £6,200
+            <span class="price-badge">Bespoke</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 — Price on Request -->
+      <div class="featured-card reveal">
+        <div class="featured-card-img">
+          <img src="/site_assets/img/ring-atelier.webp" alt="The Atelier Signature" loading="lazy" />
+          <div class="featured-card-overlay"></div>
+          <div class="featured-card-enquire">
+            <button class="enquire-btn">Private Enquiry</button>
+          </div>
+        </div>
+        <div class="featured-card-body">
+          <div class="featured-material">Platinum &nbsp;·&nbsp; Fancy Colour Diamond</div>
+          <div class="featured-name">The Atelier Signature</div>
+          <div class="featured-price" style="color: #C8960C;">
+            Price on Request
+            <span class="price-badge" style="color:#F5EDE0; border-color:rgba(245,237,224,0.2);">Exclusive</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA strip — shader echo of the hero -->
+    <div id="cta-strip" style="margin-top: 80px; text-align: center; position: relative; overflow: hidden; padding: 80px 24px;">
+      <canvas id="cta-shader" style="position:absolute; inset:0; width:100%; height:100%; opacity:0.42;"></canvas>
+      <div style="position:relative; z-index:1;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:clamp(20px,2vw,32px); font-weight:300; color:#F5EDE0; margin-bottom:36px; letter-spacing:0.02em; text-shadow: 0 0 14px rgba(5,4,3,1), 0 0 40px rgba(5,4,3,0.9);">
+          Every piece is made to order. Your vision, our craft.
+        </p>
+        <a href="#footer" style="display:inline-block; font-family:'Futura PT','Futura','Century Gothic','Montserrat',sans-serif; font-size:10px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:#050403; background:#C8960C; padding:18px 48px; text-decoration:none; cursor:none; transition:background 0.3s ease;" onmouseover="this.style.background='#E4B429'" onmouseout="this.style.background='#C8960C'">
+          Begin Your Journey
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer id="footer">
+    <div class="gold-divider" style="margin-bottom: 80px;"></div>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Steven <span>Stone</span></div>
+        <p class="footer-tagline">Bespoke fine jewellery crafted by hand in Manchester, England. Exceptional diamonds, platinum, and gold — made to endure a lifetime and beyond.</p>
+        <div class="footer-socials" style="margin-top: 36px;">
+          <!-- Instagram -->
+          <a href="#" class="footer-social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
+          <!-- Pinterest -->
+          <a href="#" class="footer-social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.853 0 1.266.64 1.266 1.408 0 .858-.546 2.14-.828 3.33-.236.995.499 1.806 1.476 1.806 1.771 0 3.132-1.869 3.132-4.572 0-2.39-1.717-4.06-4.168-4.06-2.837 0-4.5 2.128-4.5 4.327 0 .857.33 1.775.741 2.277a.3.3 0 0 1 .069.283c-.076.314-.243.995-.276 1.134-.044.183-.145.222-.334.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
+            </svg>
+          </a>
+          <!-- Facebook -->
+          <a href="#" class="footer-social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Collections</div>
+        <ul class="footer-links">
+          <li><a href="#">Engagement Rings</a></li>
+          <li><a href="#">Wedding Bands</a></li>
+          <li><a href="#">Diamond Necklaces</a></li>
+          <li><a href="#">Earrings</a></li>
+          <li><a href="#">Bracelets</a></li>
+          <li><a href="#">Bespoke</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Craftsmanship</a></li>
+          <li><a href="#">GIA Certification</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Visit Us</div>
+        <ul class="footer-links">
+          <li><a href="#">Manchester Atelier</a></li>
+          <li><a href="#">London Showroom</a></li>
+          <li><a href="#">By Appointment</a></li>
+          <li><a href="#" style="color:#C8960C;">hello@stevenstone.co.uk</a></li>
+          <li><a href="#">+44 161 000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Steven Stone Ltd. All Rights Reserved. &nbsp;·&nbsp; Manchester, England</p>
+      <div style="display:flex; gap:24px;">
+        <a href="#" style="font-size:10px; font-weight:300; letter-spacing:0.1em; color:rgba(245,237,224,0.55); text-decoration:none; cursor:none;">Privacy Policy</a>
+        <a href="#" style="font-size:10px; font-weight:300; letter-spacing:0.1em; color:rgba(245,237,224,0.55); text-decoration:none; cursor:none;">Terms</a>
+        <a href="#" style="font-size:10px; font-weight:300; letter-spacing:0.1em; color:rgba(245,237,224,0.55); text-decoration:none; cursor:none;">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ THREE.JS 3D RING ═══════════════ -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+    // ── Shared ring object & scroll progress
+    let heroRing = null;
+    let showcaseRing = null;
+    let heroRenderer, showcaseRenderer;
+
+    // ═══════════ HERO SCENE ═══════════
+    const heroCanvas = document.getElementById('ring-canvas');
+    heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
+    heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    heroRenderer.setSize(heroCanvas.offsetWidth, heroCanvas.offsetHeight);
+    heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+    heroRenderer.toneMappingExposure = 1.8;
+    heroRenderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    const heroScene = new THREE.Scene();
+    const heroCamera = new THREE.PerspectiveCamera(35, heroCanvas.offsetWidth / heroCanvas.offsetHeight, 0.1, 100);
+    heroCamera.position.set(0, 0, 4.5);
+
+    // ── Gold ripple shader background (rendered as a first pass behind the ring)
+    const bgScene = new THREE.Scene();
+    const bgCamera = new THREE.Camera();
+    bgCamera.position.z = 1;
+
+    const bgUniforms = {
+      time: { value: 1.0 },
+      resolution: { value: new THREE.Vector2() },
+      fade: { value: 1.0 },
+    };
+
+    const bgMaterial = new THREE.ShaderMaterial({
+      uniforms: bgUniforms,
+      depthWrite: false,
+      vertexShader: `
+        void main() {
+          gl_Position = vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        #define TWO_PI 6.2831853072
+        #define PI 3.14159265359
+
+        precision highp float;
+        uniform vec2 resolution;
+        uniform float time;
+        uniform float fade;
+
+        void main(void) {
+          vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
+          float t = time*0.05;
+          float lineWidth = 0.002;
+
+          vec3 color = vec3(0.0);
+          for(int j = 0; j < 3; j++){
+            for(int i=0; i < 5; i++){
+              color[j] += lineWidth*float(i*i) / abs(fract(t - 0.01*float(j)+float(i)*0.01)*5.0 - length(uv) + mod(uv.x+uv.y, 0.2));
+            }
+          }
+
+          gl_FragColor = vec4(color * fade, 1.0);
+        }
+      `,
+    });
+
+    bgScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), bgMaterial));
+
+    const updateBgResolution = () => {
+      bgUniforms.resolution.value.set(heroRenderer.domElement.width, heroRenderer.domElement.height);
+    };
+    updateBgResolution();
+
+    // Two-pass render: shader backdrop first, ring scene on top
+    heroRenderer.autoClear = false;
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xC8960C, 0.15);
+    heroScene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xfff5e0, 4.2);
+    keyLight.position.set(3, 4, 3);
+    heroScene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0xC8960C, 1.8);
+    rimLight.position.set(-3, 2, -2);
+    heroScene.add(rimLight);
+
+    const fillLight = new THREE.PointLight(0xfff0d0, 1.4, 10);
+    fillLight.position.set(0, -2, 2);
+    heroScene.add(fillLight);
+
+    const topLight = new THREE.SpotLight(0xffffff, 4.5, 12, Math.PI / 6, 0.3);
+    topLight.position.set(0, 6, 0);
+    heroScene.add(topLight);
+
+    // Front sparkle light — catches facets as the ring turns
+    const sparkleLight = new THREE.PointLight(0xfff8e8, 3.6, 8);
+    sparkleLight.position.set(0.5, 1, 3);
+
+    // Second glint source from the opposite side — diamonds catch light from both directions
+    const sparkleLight2 = new THREE.PointLight(0xffffff, 2.2, 8);
+    sparkleLight2.position.set(-1.2, -0.4, 2.6);
+    heroScene.add(sparkleLight2);
+    heroScene.add(sparkleLight);
+
+    // Procedural studio environment — reliable offline IBL for metals
+    const pmrem = new THREE.PMREMGenerator(heroRenderer);
+    const envMap = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    heroScene.environment = envMap;
+
+    // Load Draco-compressed GLB ring (geometry only — gold material applied below)
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/libs/draco/');
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+
+    loader.load(
+      '/site_assets/3d ring 1/ring2-draco.glb',
+      (gltf) => {
+        const model = gltf.scene;
+
+        // Scale and center inside a pivot group so rotation spins around the ring's own center
+        const box = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 1.5 / maxDim;
+        model.scale.setScalar(scale);
+
+        const center = box.getCenter(new THREE.Vector3());
+        model.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+
+        // The GLB ships geometry-only; dress it with the ring's authored PBR maps
+        // (tiny 2k webp set, ~600 KB total — keeps the page light)
+        const texPath = '/site_assets/3d ring 1/source/textures/';
+        const texLoader = new THREE.TextureLoader();
+        const loadTex = (file, srgb) => {
+          const t = texLoader.load(texPath + file);
+          t.flipY = false; // geometry came through glTF, so UVs use top-left origin
+          if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+          return t;
+        };
+        const ringMaterial = new THREE.MeshPhysicalMaterial({
+          map: loadTex('basecolor-2k.webp', true),
+          // metallic-2k.webp is solid white (gems render as black metal);
+          // metallic-fixed.webp masks the stones out as dielectric
+          metalnessMap: loadTex('metallic-fixed.webp'),
+          roughnessMap: loadTex('roughness-2k.webp'),
+          normalMap: loadTex('normal-2k.webp'),
+          metalness: 1.0,
+          roughness: 1.0,
+          envMapIntensity: 4.2,
+        });
+        model.traverse((child) => {
+          if (child.isMesh) {
+            child.material = ringMaterial;
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
+
+        // Hero: tilted three-quarter jewelry view, slow spin
+        const heroGroup = new THREE.Group();
+        heroGroup.add(model);
+        heroGroup.rotation.x = 0.55;
+        heroGroup.position.y = -0.1;
+        heroRing = heroGroup;
+        heroScene.add(heroGroup);
+
+        // Showcase: independent clone in its own pivot group
+        const showcaseGroup = new THREE.Group();
+        showcaseGroup.add(model.clone(true));
+        showcaseGroup.rotation.x = 0.4;
+        showcaseRing = showcaseGroup;
+        showcaseScene.add(showcaseGroup);
+        document.getElementById('showcase-canvas').style.opacity = '1';
+      },
+      undefined,
+      (err) => {
+        console.warn('GLB load error — using fallback geometry', err);
+        // Fallback: torus (ring shape)
+        const geo = new THREE.TorusGeometry(0.6, 0.18, 64, 128);
+        const mat = new THREE.MeshStandardMaterial({
+          color: 0xC8960C,
+          metalness: 0.95,
+          roughness: 0.1,
+          envMapIntensity: 2,
+        });
+        const heroGroup = new THREE.Group();
+        heroGroup.add(new THREE.Mesh(geo, mat));
+        heroGroup.rotation.x = 0.55;
+        heroRing = heroGroup;
+        heroScene.add(heroGroup);
+
+        const showcaseGroup = new THREE.Group();
+        showcaseGroup.add(new THREE.Mesh(geo.clone(), mat.clone()));
+        showcaseGroup.rotation.x = 0.4;
+        showcaseRing = showcaseGroup;
+        showcaseScene.add(showcaseGroup);
+        document.getElementById('showcase-canvas').style.opacity = '1';
+      }
+    );
+
+    // ═══════════ SHOWCASE SCENE ═══════════
+    const showcaseCanvas = document.getElementById('showcase-canvas');
+    showcaseCanvas.style.position = 'absolute';
+    showcaseCanvas.style.inset = '0';
+    showcaseCanvas.style.width = '100%';
+    showcaseCanvas.style.height = '100%';
+
+    showcaseRenderer = new THREE.WebGLRenderer({ canvas: showcaseCanvas, antialias: true, alpha: true });
+    showcaseRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    showcaseRenderer.setSize(window.innerWidth, window.innerHeight);
+    showcaseRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+    showcaseRenderer.toneMappingExposure = 2.0;
+    showcaseRenderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    const showcaseScene = new THREE.Scene();
+    const showcaseCamera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 100);
+    const tuneShowcaseCamera = () => {
+      const mobile = window.innerWidth < 768;
+      // On phones: pull back and drop the camera so the ring rides higher,
+      // clearing the bottom-docked copy panels
+      showcaseCamera.position.set(0, mobile ? -0.75 : 0.1, mobile ? 7.8 : 6.4);
+    };
+    tuneShowcaseCamera();
+
+    // Separate PMREM env per renderer (render targets are context-bound)
+    const showcasePmrem = new THREE.PMREMGenerator(showcaseRenderer);
+    showcaseScene.environment = showcasePmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+    // ── Chromatic wave shader backdrop for the showcase (first render pass)
+    const waveScene = new THREE.Scene();
+    const waveUniforms = {
+      time: { value: 0.0 },
+      resolution: { value: new THREE.Vector2(showcaseRenderer.domElement.width, showcaseRenderer.domElement.height) },
+      xScale: { value: 1.0 },
+      yScale: { value: 0.5 },
+      distortion: { value: 0.05 },
+    };
+    waveScene.add(new THREE.Mesh(
+      new THREE.PlaneGeometry(2, 2),
+      new THREE.ShaderMaterial({
+        uniforms: waveUniforms,
+        depthWrite: false,
+        vertexShader: `
+          void main() { gl_Position = vec4(position, 1.0); }
+        `,
+        fragmentShader: `
+          precision highp float;
+          uniform vec2 resolution;
+          uniform float time;
+          uniform float xScale;
+          uniform float yScale;
+          uniform float distortion;
+
+          void main() {
+            vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+
+            float d = length(p) * distortion;
+
+            float rx = p.x * (1.0 + d);
+            float gx = p.x;
+            float bx = p.x * (1.0 - d);
+
+            float r = 0.05 / abs(p.y + sin((rx + time) * xScale) * yScale);
+            float g = 0.05 / abs(p.y + sin((gx + time) * xScale) * yScale);
+            float b = 0.05 / abs(p.y + sin((bx + time) * xScale) * yScale);
+
+            gl_FragColor = vec4(r, g, b, 1.0);
+          }
+        `,
+      })
+    ));
+    showcaseRenderer.autoClear = false;
+
+    // ═══════════ CTA SHADER STRIP ═══════════
+    const ctaCanvas = document.getElementById('cta-shader');
+    const ctaRenderer = new THREE.WebGLRenderer({ canvas: ctaCanvas, antialias: true });
+    ctaRenderer.setPixelRatio(1);
+
+    const ctaScene = new THREE.Scene();
+    const ctaUniforms = {
+      time: { value: 1.0 },
+      resolution: { value: new THREE.Vector2() },
+    };
+    ctaScene.add(new THREE.Mesh(
+      new THREE.PlaneGeometry(2, 2),
+      new THREE.ShaderMaterial({
+        uniforms: ctaUniforms,
+        depthWrite: false,
+        vertexShader: `
+          void main() { gl_Position = vec4(position, 1.0); }
+        `,
+        fragmentShader: `
+          precision highp float;
+          uniform vec2 resolution;
+          uniform float time;
+
+          void main(void) {
+            vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
+            float t = time*0.05;
+            float lineWidth = 0.002;
+
+            vec3 color = vec3(0.0);
+            for(int j = 0; j < 3; j++){
+              for(int i=0; i < 5; i++){
+                color[j] += lineWidth*float(i*i) / abs(fract(t - 0.01*float(j)+float(i)*0.01)*5.0 - length(uv) + mod(uv.x+uv.y, 0.2));
+              }
+            }
+
+            gl_FragColor = vec4(color * 0.55, 1.0);
+          }
+        `,
+      })
+    ));
+
+    const sizeCtaCanvas = () => {
+      const w = ctaCanvas.offsetWidth || 1;
+      const h = ctaCanvas.offsetHeight || 1;
+      ctaRenderer.setSize(w, h, false);
+      ctaUniforms.resolution.value.set(ctaRenderer.domElement.width, ctaRenderer.domElement.height);
+    };
+    sizeCtaCanvas();
+
+    // Only animate the CTA shader while it is on screen
+    let ctaVisible = false;
+    new IntersectionObserver((entries) => {
+      ctaVisible = entries[0].isIntersecting;
+    }, { threshold: 0 }).observe(ctaCanvas);
+
+    // Showcase lighting — more dramatic
+    const sAmbient = new THREE.AmbientLight(0x1A1510, 0.2);
+    showcaseScene.add(sAmbient);
+    const sKey = new THREE.SpotLight(0xfff5e0, 5.5, 15, Math.PI / 5, 0.4);
+    sKey.position.set(4, 5, 4);
+    showcaseScene.add(sKey);
+    const sRim = new THREE.DirectionalLight(0xC8960C, 2.2);
+    sRim.position.set(-3, 1, -3);
+    showcaseScene.add(sRim);
+    const sBottom = new THREE.PointLight(0xfff0d0, 1.0, 8);
+    sBottom.position.set(0, -3, 2);
+    showcaseScene.add(sBottom);
+    const sFront = new THREE.PointLight(0xfff8e8, 2.8, 9);
+    sFront.position.set(0.5, 0.8, 3.5);
+    showcaseScene.add(sFront);
+    const sGlint = new THREE.PointLight(0xffffff, 2.0, 9);
+    sGlint.position.set(-1.4, -0.2, 3.0);
+    showcaseScene.add(sGlint);
+
+    // ═══════════ RESIZE ═══════════
+    const handleResize = () => {
+      const heroW = heroCanvas.offsetWidth;
+      const heroH = heroCanvas.offsetHeight;
+      heroCamera.aspect = heroW / heroH;
+      heroCamera.updateProjectionMatrix();
+      heroRenderer.setSize(heroW, heroH);
+      updateBgResolution();
+
+      showcaseCamera.aspect = window.innerWidth / window.innerHeight;
+      showcaseCamera.updateProjectionMatrix();
+      tuneShowcaseCamera();
+      showcaseRenderer.setSize(window.innerWidth, window.innerHeight);
+      waveUniforms.resolution.value.set(showcaseRenderer.domElement.width, showcaseRenderer.domElement.height);
+      sizeCtaCanvas();
+    };
+    window.addEventListener('resize', handleResize);
+
+    // ═══════════ ANIMATION LOOP ═══════════
+    let clock = new THREE.Clock();
+    let heroScrollProgress = 0; // 0-1
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      // Hero ring: slow float + auto-rotate (tilt held on x)
+      if (heroRing) {
+        heroRing.rotation.y += 0.004;
+        heroRing.position.y = -0.1 + Math.sin(t * 0.6) * 0.04;
+      }
+
+      // Intro: ripple shader plays once, then fades out and hands over to sparkles
+      const INTRO_HOLD = 3.5, INTRO_FADE = 2.5;
+      const introFade = prefersReducedMotion
+        ? 0
+        : Math.max(0, 1 - Math.max(0, t - INTRO_HOLD) / INTRO_FADE);
+      bgUniforms.fade.value = introFade;
+
+      if (!prefersReducedMotion) bgUniforms.time.value += 0.05;
+      heroRenderer.clear();
+      if (introFade > 0.001) heroRenderer.render(bgScene, bgCamera);
+      heroRenderer.render(heroScene, heroCamera);
+
+      // Sparkles take over as the shader bows out
+      if (window._setSparklesAlpha) window._setSparklesAlpha(1 - introFade);
+
+      // Showcase ring: scroll-driven full revolution + gentle tilt sway
+      if (showcaseRing) {
+        showcaseRing.rotation.y = heroScrollProgress * Math.PI * 2;
+        showcaseRing.rotation.x = 0.4 + Math.sin(heroScrollProgress * Math.PI) * 0.3;
+        showcaseRing.position.y = Math.sin(t * 0.4) * 0.03;
+      }
+      if (!prefersReducedMotion) waveUniforms.time.value += 0.01;
+      showcaseRenderer.clear();
+      showcaseRenderer.render(waveScene, bgCamera);
+      showcaseRenderer.render(showcaseScene, showcaseCamera);
+
+      // CTA shader strip — render only when visible
+      if (ctaVisible) {
+        if (!prefersReducedMotion) ctaUniforms.time.value += 0.05;
+        ctaRenderer.render(ctaScene, bgCamera);
+      }
+    };
+    animate();
+
+    // Expose scroll progress setter
+    window._setShowcaseProgress = (p) => { heroScrollProgress = p; };
+  </script>
+
+  <!-- ═══════════════ GSAP ANIMATIONS ═══════════════ -->
+  <script>
+    // ── Lenis smooth scroll (optional — site must work without it)
+    let lenis = null;
+    if (typeof Lenis !== 'undefined') {
+      lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+      lenis.on('scroll', () => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.update(); });
+      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    // ── Custom cursor
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursor-ring');
+    let cx = 0, cy = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      cx = e.clientX; cy = e.clientY;
+      cursor.style.left = cx + 'px';
+      cursor.style.top = cy + 'px';
+    });
+
+    const animateCursorRing = () => {
+      rx += (cx - rx) * 0.12;
+      ry += (cy - ry) * 0.12;
+      cursorRing.style.left = rx + 'px';
+      cursorRing.style.top = ry + 'px';
+      requestAnimationFrame(animateCursorRing);
+    };
+    animateCursorRing();
+
+    // ── Navbar scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    // ── Gold sparkles over the hero ring (vanilla port of the SparklesCore component)
+    (() => {
+      const canvas = document.getElementById('sparkles-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let globalAlpha = 0;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const COUNT = 220;
+      const COLORS = ['#E4B429', '#C8960C', '#FFF3D6', '#F5EDE0'];
+
+      const sizeCanvas = () => {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      };
+      sizeCanvas();
+      window.addEventListener('resize', sizeCanvas);
+
+      const spawn = () => {
+        // Bias spawn positions toward the center where the ring lives
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.pow(Math.random(), 0.55) * 0.58;
+        return {
+          x: 0.5 + Math.cos(angle) * radius,
+          y: 0.48 + Math.sin(angle) * radius * 0.8,
+          size: 0.5 + Math.random() * 2.0,
+          phase: Math.random() * Math.PI * 2,
+          twinkleSpeed: 1.5 + Math.random() * 3.5,
+          driftX: (Math.random() - 0.5) * 0.00012,
+          driftY: -0.00006 - Math.random() * 0.00012,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          life: 6 + Math.random() * 10,
+          age: Math.random() * 8,
+        };
+      };
+      for (let i = 0; i < COUNT; i++) particles.push(spawn());
+
+      window._setSparklesAlpha = (a) => { globalAlpha = a; };
+
+      let lastT = performance.now();
+      const tick = (now) => {
+        requestAnimationFrame(tick);
+        const dt = Math.min((now - lastT) / 1000, 0.05);
+        lastT = now;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (globalAlpha <= 0.005) return;
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.age += dt;
+          if (p.age > p.life) { particles[i] = spawn(); particles[i].age = 0; continue; }
+          p.x += p.driftX;
+          p.y += p.driftY;
+
+          const twinkle = reducedMotion
+            ? 0.45
+            : 0.25 + 0.75 * Math.abs(Math.sin(p.phase + now / 1000 * p.twinkleSpeed));
+          const lifeFade = Math.min(p.age / 1.5, 1, (p.life - p.age) / 1.5);
+          ctx.globalAlpha = twinkle * lifeFade * globalAlpha;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x * canvas.width, p.y * canvas.height, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      };
+      requestAnimationFrame(tick);
+    })();
+
+    // ── Mobile menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const setMenu = (open) => {
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      mobileMenu.setAttribute('aria-hidden', String(!open));
+      mobileMenu.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    menuToggle.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+    // ── Hero entrance animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── Luxury text reveals
+    const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Split a heading into per-character spans (descends into <em> etc.)
+    const splitChars = (el) => {
+      const walk = (node) => {
+        [...node.childNodes].forEach((child) => {
+          if (child.nodeType === 3) {
+            const frag = document.createDocumentFragment();
+            [...child.textContent].forEach((ch) => {
+              if (ch.trim() === '') { frag.appendChild(document.createTextNode(ch)); return; }
+              const s = document.createElement('span');
+              s.className = 'char';
+              s.textContent = ch;
+              frag.appendChild(s);
+            });
+            child.replaceWith(frag);
+          } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+            walk(child);
+          }
+        });
+      };
+      walk(el);
+      return el.querySelectorAll('.char');
+    };
+
+    // Wrap each <br>-separated line in an overflow-hidden mask
+    const maskLines = (el) => {
+      const lines = [[]];
+      [...el.childNodes].forEach((n) => {
+        if (n.nodeType === 1 && n.tagName === 'BR') lines.push([]);
+        else lines[lines.length - 1].push(n);
+      });
+      el.innerHTML = '';
+      const spans = [];
+      lines.forEach((nodes) => {
+        const mask = document.createElement('span');
+        mask.className = 'line-mask';
+        const line = document.createElement('span');
+        line.className = 'line';
+        nodes.forEach((n) => line.appendChild(n));
+        mask.appendChild(line);
+        el.appendChild(mask);
+        spans.push(line);
+      });
+      return spans;
+    };
+
+    const heroTl = gsap.timeline({ delay: 0.4 });
+    if (motionOK) {
+      const heroChars = splitChars(document.querySelector('.hero-title'));
+      gsap.set('.hero-title', { opacity: 1 });
+      heroTl
+        .to('.hero-pre', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+        .fromTo(heroChars,
+          { yPercent: 115, opacity: 0, rotate: 5 },
+          { yPercent: 0, opacity: 1, rotate: 0, duration: 1.15, stagger: 0.03, ease: 'power4.out' },
+          '-=0.55')
+        .to('.hero-sub', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.7')
+        .to('.hero-scroll-hint', { opacity: 1, duration: 0.8, ease: 'power2.out' }, '-=0.4');
+
+      // Section headings + story quote: masked line reveals
+      document.querySelectorAll('.section-heading, .story-quote').forEach((h) => {
+        const lines = maskLines(h);
+        gsap.fromTo(lines,
+          { yPercent: 118 },
+          {
+            yPercent: 0, duration: 1.2, stagger: 0.14, ease: 'power4.out',
+            scrollTrigger: { trigger: h, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+    } else {
+      heroTl
+        .to('.hero-pre', { opacity: 1, duration: 0.3 })
+        .to('.hero-title', { opacity: 1, duration: 0.3 }, 0)
+        .to('.hero-sub', { opacity: 1, duration: 0.3 }, 0)
+        .to('.hero-scroll-hint', { opacity: 1, duration: 0.3 }, 0);
+    }
+
+    // ── Showcase scroll storytelling
+    const showcaseEl = document.getElementById('showcase');
+    const st1 = document.getElementById('st-1');
+    const st2 = document.getElementById('st-2');
+    const st3 = document.getElementById('st-3');
+
+    ScrollTrigger.create({
+      trigger: showcaseEl,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1.5,
+      onUpdate: (self) => {
+        const p = self.progress;
+        if (typeof window._setShowcaseProgress === 'function') {
+          window._setShowcaseProgress(p);
+        }
+
+        // Panel 1: 0 – 0.33
+        const show1 = p > 0.0 && p < 0.38;
+        st1.classList.toggle('visible', show1);
+
+        // Panel 2: 0.33 – 0.66
+        const show2 = p >= 0.34 && p < 0.72;
+        st2.classList.toggle('visible', show2);
+
+        // Panel 3: 0.66 – 1
+        const show3 = p >= 0.68;
+        st3.classList.toggle('visible', show3);
+      }
+    });
+
+    // ── General reveal animations
+    const reveals = gsap.utils.toArray('.reveal');
+    reveals.forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 48 },
+        {
+          opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+        }
+      );
+    });
+
+    const revealsLeft = gsap.utils.toArray('.reveal-left');
+    revealsLeft.forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, x: -48 },
+        {
+          opacity: 1, x: 0, duration: 1.1, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+        }
+      );
+    });
+
+    const revealsRight = gsap.utils.toArray('.reveal-right');
+    revealsRight.forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, x: 48 },
+        {
+          opacity: 1, x: 0, duration: 1.1, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+        }
+      );
+    });
+
+    // ── Collection cards stagger
+    gsap.fromTo('.collection-card',
+      { opacity: 0, y: 32 },
+      {
+        opacity: 1, y: 0, duration: 0.9, stagger: 0.15, ease: 'power3.out',
+        scrollTrigger: { trigger: '.collections-grid', start: 'top 80%', toggleActions: 'play none none none' }
+      }
+    );
+
+    // ── Featured cards stagger
+    gsap.fromTo('.featured-card',
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1, y: 0, duration: 1, stagger: 0.18, ease: 'power3.out',
+        scrollTrigger: { trigger: '.featured-grid', start: 'top 80%', toggleActions: 'play none none none' }
+      }
+    );
+
+    // ── Parallax on story image
+    gsap.to('.story-image-side img', {
+      yPercent: -12,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#story',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5,
+      }
+    });
+
+    // ── prefers-reduced-motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (lenis) lenis.destroy();
+      gsap.globalTimeline.clear();
+      gsap.set('.hero-pre, .hero-title, .hero-sub, .hero-scroll-hint, .reveal, .reveal-left, .reveal-right, .collection-card, .featured-card', { opacity: 1, x: 0, y: 0 });
+    }
+  </script>
+
+</body>
+</html>
